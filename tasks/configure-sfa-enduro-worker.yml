@@ -58,5 +58,5 @@
         service: "preprocessing-worker"
         conf_files_name: "preprocessing-worker"
         logfile: "{{ sfa_enduro_worker_log_file }}"
-        order: "50"
+        rsyslog_order: "50"
   when: sfa_enduro_worker_use_syslog|bool
