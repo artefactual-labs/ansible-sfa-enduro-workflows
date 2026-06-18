@@ -7,6 +7,15 @@
     - sfa_enduro_worker_install
     - sfa_enduro_worker_configure
 
+- import_tasks: create-system-user.yml
+  when:
+    - sfa_enduro_worker_create_system_user|bool
+    - sfa_enduro_worker_install_rpm|bool or sfa_enduro_worker_configure|bool
+  become: true
+  tags:
+    - sfa_enduro_worker_install
+    - sfa_enduro_worker_configure
+
 - import_tasks: install-sfa-enduro-worker.yml
   when: sfa_enduro_worker_install_rpm|bool
   become: true

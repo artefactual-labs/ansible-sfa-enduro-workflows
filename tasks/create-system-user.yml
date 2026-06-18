@@ -1,0 +1,16 @@
+---
+- name: Create the SFA Enduro worker group
+  group:
+    name: "{{ sfa_enduro_worker_system_group }}"
+    state: present
+    system: true
+
+- name: Create the SFA Enduro worker user
+  user:
+    name: "{{ sfa_enduro_worker_system_user }}"
+    groups: "{{ sfa_enduro_worker_system_group }}"
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: true
+    home: "{{ sfa_enduro_worker_working_dir }}"

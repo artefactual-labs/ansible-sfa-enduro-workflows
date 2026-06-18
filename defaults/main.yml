@@ -1,6 +1,7 @@
 ---
 sfa_enduro_worker_system_user: "enduro"
 sfa_enduro_worker_system_group: "enduro"
+sfa_enduro_worker_create_system_user: true
 sfa_enduro_worker_systemd_credentials: false
 sfa_enduro_worker_use_syslog: false
 sfa_enduro_worker_remote_syslog: "none"
