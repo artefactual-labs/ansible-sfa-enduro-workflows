@@ -12,8 +12,10 @@ sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbu
 sfa_enduro_worker_configure: False
 sfa_enduro_worker_rpm_gpg_check_enabled: True
 sfa_enduro_worker_config_file: "templates/preprocessing-worker.toml.j2"
+sfa_enduro_worker_task_queue: "sfa-enduro"
 
 # Preprocessing
+sfa_enduro_worker_preprocessing_workflow_name: "preprocessing"
 sfa_enduro_worker_preprocessing_db_user: "preprocessing"
 sfa_enduro_worker_preprocessing_db_pass: "enduro%123"
 sfa_enduro_worker_preprocessing_db_host: "localhost"
@@ -24,6 +26,7 @@ sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }
 sfa_enduro_worker_preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
 
 # Poststorage
+sfa_enduro_worker_poststorage_workflow_name: "poststorage"
 sfa_enduro_worker_poststorage_amss_base_url: ""
 sfa_enduro_worker_poststorage_amss_username: ""
 sfa_enduro_worker_poststorage_amss_key: ""

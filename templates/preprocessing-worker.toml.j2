@@ -7,10 +7,10 @@ namespace = "default"
 
 [worker]
 maxConcurrentSessions = 1
-taskQueue = "sfa-enduro"
+taskQueue = "{{ sfa_enduro_worker_task_queue }}"
 
 [preprocessing]
-workflowName = "preprocessing"
+workflowName = "{{ sfa_enduro_worker_preprocessing_workflow_name }}"
 sharedPath = "{{ sfa_enduro_worker_preprocessing_shared_path }}"
 checkDuplicates = "{{ sfa_enduro_worker_preprocessing_check_duplicates }}"
 
@@ -29,7 +29,7 @@ allowlistPath = "/etc/allowed_file_formats.csv"
 path = "{{ sfa_enduro_worker_preprocessing_verapdf_path }}"
 
 [poststorage]
-workflowName = "poststorage"
+workflowName = "{{ sfa_enduro_worker_poststorage_workflow_name }}"
 workingDir = "/tmp"
 
 [poststorage.amss]
