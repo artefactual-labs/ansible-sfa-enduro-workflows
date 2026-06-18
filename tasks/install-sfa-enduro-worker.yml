@@ -1,7 +1,7 @@
 ---
 
-- name: Install preprocessing-worker package
+- name: Install SFA Enduro worker package
   yum:
-    name: "{{ preprocessing_worker_rpm_url }}"
+    name: "{{ sfa_enduro_worker_rpm_url }}"
     state: present
     disable_gpg_check: "{{ not sfa_enduro_worker_rpm_gpg_check_enabled|bool }}"

@@ -1,7 +1,7 @@
-- name: Create enduro secured credentials
+- name: Create secured credentials
   shell: echo '{{ lookup('ansible.builtin.template', secret_file ) }}' | systemd-creds encrypt -p --name={{ secret_name }} - -
   register: secured_credentials
-  notify: restart {{ service }}
+  notify: restart sfa-enduro-worker
 
 - name: "Create override dir"
   file:

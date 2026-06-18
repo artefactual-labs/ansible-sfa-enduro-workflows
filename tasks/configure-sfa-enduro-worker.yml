@@ -1,4 +1,4 @@
-- name: "Create preprocessing shared folder"
+- name: "Create SFA Enduro worker shared folder"
   become: yes
   file:
     path: "{{ sfa_enduro_worker_preprocessing_shared_path }}"
@@ -7,14 +7,14 @@
     mode: 0755
     state: "directory"
 
-- name: Create preprocessing systemd file
+- name: Create SFA Enduro worker systemd file
   template:
     src: templates/preprocessing-worker.service.j2
     dest: /etc/systemd/system/preprocessing-worker.service
     owner: root
     group: root
     mode: 0644
-  notify: restart preprocessing-worker
+  notify: restart sfa-enduro-worker
 
 - name: Copy the allowed file formats CSV file
   template:
@@ -27,15 +27,15 @@
     - templates/{{ inventory_hostname }}/allowed_file_formats.csv.j2
     - templates/allowed_file_formats.csv.j2
 
-- name: Copy the preprocessing worker config file
+- name: Copy the SFA Enduro worker config file
   template:
-    src: "{{ preprocessing_config_file }}"
+    src: "{{ sfa_enduro_worker_config_file }}"
     dest: /etc/preprocessing-worker.toml
     owner: root
     group: root
     mode: 0644
   when: not sfa_enduro_worker_systemd_credentials|bool
-  notify: restart preprocessing-worker
+  notify: restart sfa-enduro-worker
 
 - name: Use systemd credentials
   block:
@@ -43,7 +43,7 @@
       vars:
         service: "preprocessing-worker"
         secret_name: "preprocessing-worker.toml"
-        secret_file: "{{ preprocessing_config_file }}"
+        secret_file: "{{ sfa_enduro_worker_config_file }}"
 
     - name: "Remove cleartext configuration file"
       file:
@@ -51,7 +51,7 @@
         state: absent
   when: sfa_enduro_worker_systemd_credentials|bool
 
-- name: Configure logging
+- name: Configure SFA Enduro worker logging
   block:
     - include_tasks: configure-logging.yml
       vars:

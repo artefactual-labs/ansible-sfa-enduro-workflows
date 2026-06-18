@@ -12,10 +12,10 @@ taskQueue = "sfa-enduro"
 [preprocessing]
 workflowName = "preprocessing"
 sharedPath = "{{ sfa_enduro_worker_preprocessing_shared_path }}"
-checkDuplicates = "{{ preprocessing_check_duplicates }}"
+checkDuplicates = "{{ sfa_enduro_worker_preprocessing_check_duplicates }}"
 
 [preprocessing.persistence]
-dsn = "{{ preprocessing_db_user }}:{{ preprocessing_db_pass }}@tcp({{ preprocessing_db_host }}:{{ preprocessing_db_port | int }})/{{ preprocessing_db_name }}"
+dsn = "{{ sfa_enduro_worker_preprocessing_db_user }}:{{ sfa_enduro_worker_preprocessing_db_pass }}@tcp({{ sfa_enduro_worker_preprocessing_db_host }}:{{ sfa_enduro_worker_preprocessing_db_port | int }})/{{ sfa_enduro_worker_preprocessing_db_name }}"
 driver = "mysql"
 migrate = true
 
@@ -26,7 +26,7 @@ checksumAlgorithm = "md5"
 allowlistPath = "/etc/allowed_file_formats.csv"
 
 [preprocessing.filevalidate.verapdf]
-path = "{{ preprocessing_verapdf_path }}"
+path = "{{ sfa_enduro_worker_preprocessing_verapdf_path }}"
 
 [poststorage]
 workflowName = "poststorage"
@@ -38,22 +38,22 @@ username = "{{ sfa_enduro_worker_poststorage_amss_username }}"
 key = "{{ sfa_enduro_worker_poststorage_amss_key }}"
 
 [apis]
-enabled = "{{ sfa_apis_enabled | default('false', true) }}"
-url = "{{ sfa_apis_url }}"
-timeout = "{{ sfa_apis_timeout | default('10s', true) }}"
-pollInterval = "{{ sfa_apis_poll_interval | default('30s', true) }}"
-token = "{{ sfa_apis_token }}"
+enabled = "{{ sfa_enduro_worker_apis_enabled | default('false', true) }}"
+url = "{{ sfa_enduro_worker_apis_url }}"
+timeout = "{{ sfa_enduro_worker_apis_timeout | default('10s', true) }}"
+pollInterval = "{{ sfa_enduro_worker_apis_poll_interval | default('30s', true) }}"
+token = "{{ sfa_enduro_worker_apis_token }}"
 
 [apis.oidc]
-enabled = "{{ sfa_apis_oidc_enabled | default('false', true) }}"
-providerURL = "{{ sfa_apis_oidc_provider_url }}"
-tokenURL = "{{ sfa_apis_oidc_token_url }}"
-clientID = "{{ sfa_apis_oidc_client_id }}"
-clientSecret = "{{ sfa_apis_oidc_client_secret }}"
-scopes = "{{ sfa_apis_oidc_scopes }}"
-audience = "{{ sfa_apis_oidc_audience }}"
-tokenExpiryLeeway = "{{ sfa_apis_oidc_token_expiry_leeway | default('30s', true) }}"
-retryMaxAttempts = {{ sfa_apis_oidc_retry_max_attempts | default(3, true) }}
-retryInitialInterval = "{{ sfa_apis_oidc_retry_initial_interval | default('500ms', true) }}"
-retryMaxInterval = "{{ sfa_apis_oidc_retry_max_interval | default('2s', true) }}"
-retryBackoffCoefficient = {{ sfa_apis_oidc_retry_backoff_coefficient | default(2.0, true) }}
+enabled = "{{ sfa_enduro_worker_apis_oidc_enabled | default('false', true) }}"
+providerURL = "{{ sfa_enduro_worker_apis_oidc_provider_url }}"
+tokenURL = "{{ sfa_enduro_worker_apis_oidc_token_url }}"
+clientID = "{{ sfa_enduro_worker_apis_oidc_client_id }}"
+clientSecret = "{{ sfa_enduro_worker_apis_oidc_client_secret }}"
+scopes = "{{ sfa_enduro_worker_apis_oidc_scopes }}"
+audience = "{{ sfa_enduro_worker_apis_oidc_audience }}"
+tokenExpiryLeeway = "{{ sfa_enduro_worker_apis_oidc_token_expiry_leeway | default('30s', true) }}"
+retryMaxAttempts = {{ sfa_enduro_worker_apis_oidc_retry_max_attempts | default(3, true) }}
+retryInitialInterval = "{{ sfa_enduro_worker_apis_oidc_retry_initial_interval | default('500ms', true) }}"
+retryMaxInterval = "{{ sfa_enduro_worker_apis_oidc_retry_max_interval | default('2s', true) }}"
+retryBackoffCoefficient = {{ sfa_enduro_worker_apis_oidc_retry_backoff_coefficient | default(2.0, true) }}

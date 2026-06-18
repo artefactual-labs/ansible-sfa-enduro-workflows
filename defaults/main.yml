@@ -1,54 +1,47 @@
 ---
-# Preprocessing worker
-preprocessing_worker_install_rpm: False
-preprocessing_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/preprocessing-worker-0.1.0-202405160901.el9.x86_64.rpm"
-preprocessing_worker_configure: False
-sfa_enduro_worker_rpm_gpg_check_enabled: True
-
-# Preprocessing database
-preprocessing_db_user: "preprocessing"
-preprocessing_db_pass: "enduro%123"
-preprocessing_db_host: "localhost"
-preprocessing_db_name: "preprocessing"
-preprocessing_db_port: "3306"
-
-# Other preprocessing settings
-preprocessing_check_duplicates: "true"
-preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
-
-# Poststorage AMSS defaults
-sfa_enduro_worker_poststorage_amss_base_url: ""
-sfa_enduro_worker_poststorage_amss_username: ""
-sfa_enduro_worker_poststorage_amss_key: ""
-
-# Configuration file defaults
-preprocessing_config_file: "templates/preprocessing-worker.toml.j2"
-
-# Worker integration defaults
 sfa_enduro_worker_system_user: "enduro"
 sfa_enduro_worker_system_group: "enduro"
 sfa_enduro_worker_systemd_credentials: false
 sfa_enduro_worker_use_syslog: false
 sfa_enduro_worker_remote_syslog: "none"
 sfa_enduro_worker_working_dir: "/var/lib/enduro"
-sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }}/preprocessing"
 sfa_enduro_worker_log_file: "/var/log/enduro/preprocessing-worker.log"
+sfa_enduro_worker_install_rpm: False
+sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/preprocessing-worker-0.1.0-202405160901.el9.x86_64.rpm"
+sfa_enduro_worker_configure: False
+sfa_enduro_worker_rpm_gpg_check_enabled: True
+sfa_enduro_worker_config_file: "templates/preprocessing-worker.toml.j2"
 
-# SFA APIS configuration
-sfa_apis_enabled: "false"
-sfa_apis_url: ""
-sfa_apis_timeout: "10s"
-sfa_apis_poll_interval: "30s"
-sfa_apis_token: ""
-sfa_apis_oidc_enabled: "false"
-sfa_apis_oidc_provider_url: ""
-sfa_apis_oidc_token_url: ""
-sfa_apis_oidc_client_id: ""
-sfa_apis_oidc_client_secret: ""
-sfa_apis_oidc_scopes: ""
-sfa_apis_oidc_audience: ""
-sfa_apis_oidc_token_expiry_leeway: "30s"
-sfa_apis_oidc_retry_max_attempts: 3
-sfa_apis_oidc_retry_initial_interval: "500ms"
-sfa_apis_oidc_retry_max_interval: "2s"
-sfa_apis_oidc_retry_backoff_coefficient: 2.0
+# Preprocessing
+sfa_enduro_worker_preprocessing_db_user: "preprocessing"
+sfa_enduro_worker_preprocessing_db_pass: "enduro%123"
+sfa_enduro_worker_preprocessing_db_host: "localhost"
+sfa_enduro_worker_preprocessing_db_name: "preprocessing"
+sfa_enduro_worker_preprocessing_db_port: "3306"
+sfa_enduro_worker_preprocessing_check_duplicates: "true"
+sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }}/preprocessing"
+sfa_enduro_worker_preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
+
+# Poststorage
+sfa_enduro_worker_poststorage_amss_base_url: ""
+sfa_enduro_worker_poststorage_amss_username: ""
+sfa_enduro_worker_poststorage_amss_key: ""
+
+# APIS configuration
+sfa_enduro_worker_apis_enabled: "false"
+sfa_enduro_worker_apis_url: ""
+sfa_enduro_worker_apis_timeout: "10s"
+sfa_enduro_worker_apis_poll_interval: "30s"
+sfa_enduro_worker_apis_token: ""
+sfa_enduro_worker_apis_oidc_enabled: "false"
+sfa_enduro_worker_apis_oidc_provider_url: ""
+sfa_enduro_worker_apis_oidc_token_url: ""
+sfa_enduro_worker_apis_oidc_client_id: ""
+sfa_enduro_worker_apis_oidc_client_secret: ""
+sfa_enduro_worker_apis_oidc_scopes: ""
+sfa_enduro_worker_apis_oidc_audience: ""
+sfa_enduro_worker_apis_oidc_token_expiry_leeway: "30s"
+sfa_enduro_worker_apis_oidc_retry_max_attempts: 3
+sfa_enduro_worker_apis_oidc_retry_initial_interval: "500ms"
+sfa_enduro_worker_apis_oidc_retry_max_interval: "2s"
+sfa_enduro_worker_apis_oidc_retry_backoff_coefficient: 2.0
