@@ -5,15 +5,15 @@ AssertFileIsExecutable=/usr/bin/preprocessing-worker
 
 [Service]
 Type=simple
-WorkingDirectory=/var/lib/enduro
-User=enduro
-Group=enduro
-{% if enduro_systemd_credentials|bool %}
+WorkingDirectory={{ sfa_enduro_worker_working_dir }}
+User={{ sfa_enduro_worker_system_user }}
+Group={{ sfa_enduro_worker_system_group }}
+{% if sfa_enduro_worker_systemd_credentials|bool %}
 ExecStart=/usr/bin/preprocessing-worker --config $SECRETS
 {% else %}
 ExecStart=/usr/bin/preprocessing-worker --config /etc/preprocessing-worker.toml
 {% endif %}
-{% if enduro_use_syslog|bool %}
+{% if sfa_enduro_worker_use_syslog|bool %}
 SyslogIdentifier=preprocessing-worker
 StandardOutput=syslog
 StandardError=inherit

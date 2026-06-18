@@ -12,5 +12,4 @@
     daemon_reload: true
     name: rsyslog
     state: restarted
-  when: enduro_use_syslog|bool
-
+  when: sfa_enduro_worker_use_syslog|bool

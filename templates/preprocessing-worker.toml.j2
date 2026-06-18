@@ -1,6 +1,3 @@
-{% if enduro_pipelines|length > 0 %}
-{% set pipeline = enduro_pipelines[0] %}
-
 debug = false
 verbosity = 0
 
@@ -14,7 +11,7 @@ taskQueue = "sfa-enduro"
 
 [preprocessing]
 workflowName = "preprocessing"
-sharedPath = "/var/lib/enduro/preprocessing"
+sharedPath = "{{ sfa_enduro_worker_preprocessing_shared_path }}"
 checkDuplicates = "{{ preprocessing_check_duplicates }}"
 
 [preprocessing.persistence]
@@ -36,9 +33,9 @@ workflowName = "poststorage"
 workingDir = "/tmp"
 
 [poststorage.amss]
-baseURL = "{{ pipeline.storageServiceURL }}"
-username = "{{ pipeline.storageServiceUser }}"
-key = "{{ pipeline.storageServiceKey }}"
+baseURL = "{{ sfa_enduro_worker_poststorage_amss_base_url }}"
+username = "{{ sfa_enduro_worker_poststorage_amss_username }}"
+key = "{{ sfa_enduro_worker_poststorage_amss_key }}"
 
 [apis]
 enabled = "{{ sfa_apis_enabled | default('false', true) }}"
@@ -60,5 +57,3 @@ retryMaxAttempts = {{ sfa_apis_oidc_retry_max_attempts | default(3, true) }}
 retryInitialInterval = "{{ sfa_apis_oidc_retry_initial_interval | default('500ms', true) }}"
 retryMaxInterval = "{{ sfa_apis_oidc_retry_max_interval | default('2s', true) }}"
 retryBackoffCoefficient = {{ sfa_apis_oidc_retry_backoff_coefficient | default(2.0, true) }}
-
-{% endif %}

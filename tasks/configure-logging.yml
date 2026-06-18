@@ -2,8 +2,8 @@
   become: yes
   file:
     path: "{{ logfile | dirname }}"
-    owner: "{{ enduro_system_user }}"
-    group: "{{ enduro_system_group }}"
+    owner: "{{ sfa_enduro_worker_system_user }}"
+    group: "{{ sfa_enduro_worker_system_group }}"
     mode: 0755
     state: "directory"
 

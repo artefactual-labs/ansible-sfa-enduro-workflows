@@ -3,6 +3,7 @@
 preprocessing_worker_install_rpm: False
 preprocessing_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/preprocessing-worker-0.1.0-202405160901.el9.x86_64.rpm"
 preprocessing_worker_configure: False
+sfa_enduro_worker_rpm_gpg_check_enabled: True
 
 # Preprocessing database
 preprocessing_db_user: "preprocessing"
@@ -15,17 +16,23 @@ preprocessing_db_port: "3306"
 preprocessing_check_duplicates: "true"
 preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
 
+# Poststorage AMSS defaults
+sfa_enduro_worker_poststorage_amss_base_url: ""
+sfa_enduro_worker_poststorage_amss_username: ""
+sfa_enduro_worker_poststorage_amss_key: ""
+
 # Configuration file defaults
 preprocessing_config_file: "templates/preprocessing-worker.toml.j2"
 
-# Enduro integration defaults
-enduro_system_user: "enduro"
-enduro_system_group: "enduro"
-enduro_systemd_credentials: false
-enduro_use_syslog: false
-enduro_remote_syslog: "none"
-enduro_auditlog_filepath: "/var/log/enduro/audit.log"
-enduro_pipelines: []
+# Worker integration defaults
+sfa_enduro_worker_system_user: "enduro"
+sfa_enduro_worker_system_group: "enduro"
+sfa_enduro_worker_systemd_credentials: false
+sfa_enduro_worker_use_syslog: false
+sfa_enduro_worker_remote_syslog: "none"
+sfa_enduro_worker_working_dir: "/var/lib/enduro"
+sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }}/preprocessing"
+sfa_enduro_worker_log_file: "/var/log/enduro/preprocessing-worker.log"
 
 # SFA APIS configuration
 sfa_apis_enabled: "false"
@@ -45,4 +52,3 @@ sfa_apis_oidc_retry_max_attempts: 3
 sfa_apis_oidc_retry_initial_interval: "500ms"
 sfa_apis_oidc_retry_max_interval: "2s"
 sfa_apis_oidc_retry_backoff_coefficient: 2.0
-
