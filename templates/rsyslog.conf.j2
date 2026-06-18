@@ -1,0 +1,24 @@
+{% if logfile == enduro_auditlog_filepath and enduro_remote_syslog != "none" %}
+$ModLoad imfile
+$InputFileName {{ logfile }}
+$InputFileTag enduro-audit:
+$InputFileStateFile /tmp/audit_log_state
+$InputFileSeverity info
+$InputFileFacility local3
+$InputRunFileMonitor
+*.*      @@{{ enduro_remote_syslog }}
+{% else %}
+if ($programname == "{{ service }}") then {
+        action(
+                type="omfile"
+                FileOwner="enduro"
+                FileGroup="enduro"
+                File="{{ logfile }}"
+                FileCreateMode="0644"
+        )
+	{% if enduro_remote_syslog != "none" %}
+	*.*      @@{{ enduro_remote_syslog }}
+        {% endif %}
+        stop
+}
+{% endif %}

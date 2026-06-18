@@ -1,0 +1,64 @@
+{% if enduro_pipelines|length > 0 %}
+{% set pipeline = enduro_pipelines[0] %}
+
+debug = false
+verbosity = 0
+
+[temporal]
+address = "127.0.0.1:7233"
+namespace = "default"
+
+[worker]
+maxConcurrentSessions = 1
+taskQueue = "sfa-enduro"
+
+[preprocessing]
+workflowName = "preprocessing"
+sharedPath = "/var/lib/enduro/preprocessing"
+checkDuplicates = "{{ preprocessing_check_duplicates }}"
+
+[preprocessing.persistence]
+dsn = "{{ preprocessing_db_user }}:{{ preprocessing_db_pass }}@tcp({{ preprocessing_db_host }}:{{ preprocessing_db_port | int }})/{{ preprocessing_db_name }}"
+driver = "mysql"
+migrate = true
+
+[preprocessing.bagCreate]
+checksumAlgorithm = "md5"
+
+[preprocessing.fileFormat]
+allowlistPath = "/etc/allowed_file_formats.csv"
+
+[preprocessing.filevalidate.verapdf]
+path = "{{ preprocessing_verapdf_path }}"
+
+[poststorage]
+workflowName = "poststorage"
+workingDir = "/tmp"
+
+[poststorage.amss]
+baseURL = "{{ pipeline.storageServiceURL }}"
+username = "{{ pipeline.storageServiceUser }}"
+key = "{{ pipeline.storageServiceKey }}"
+
+[apis]
+enabled = "{{ sfa_apis_enabled | default('false', true) }}"
+url = "{{ sfa_apis_url }}"
+timeout = "{{ sfa_apis_timeout | default('10s', true) }}"
+pollInterval = "{{ sfa_apis_poll_interval | default('30s', true) }}"
+token = "{{ sfa_apis_token }}"
+
+[apis.oidc]
+enabled = "{{ sfa_apis_oidc_enabled | default('false', true) }}"
+providerURL = "{{ sfa_apis_oidc_provider_url }}"
+tokenURL = "{{ sfa_apis_oidc_token_url }}"
+clientID = "{{ sfa_apis_oidc_client_id }}"
+clientSecret = "{{ sfa_apis_oidc_client_secret }}"
+scopes = "{{ sfa_apis_oidc_scopes }}"
+audience = "{{ sfa_apis_oidc_audience }}"
+tokenExpiryLeeway = "{{ sfa_apis_oidc_token_expiry_leeway | default('30s', true) }}"
+retryMaxAttempts = {{ sfa_apis_oidc_retry_max_attempts | default(3, true) }}
+retryInitialInterval = "{{ sfa_apis_oidc_retry_initial_interval | default('500ms', true) }}"
+retryMaxInterval = "{{ sfa_apis_oidc_retry_max_interval | default('2s', true) }}"
+retryBackoffCoefficient = {{ sfa_apis_oidc_retry_backoff_coefficient | default(2.0, true) }}
+
+{% endif %}

@@ -1,0 +1,16 @@
+{{ logfile }}
+{
+        rotate 7
+        daily
+        missingok
+        notifempty
+        delaycompress
+        compress
+        {% if logfile == enduro_auditlog_filepath %}
+        copytruncate
+        {% else %}
+        postrotate
+          sudo systemctl reload rsyslog >/dev/null 2>&1 || true
+        endscript
+        {% endif %}
+}

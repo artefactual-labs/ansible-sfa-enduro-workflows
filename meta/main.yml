@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Artefactual
+  description: Deploy SFA Enduro workflows
+  role_name: sfa_enduro_workflows
+  license: AGPL3
+  company: Artefactual
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 9
+
+dependencies: []

@@ -1,0 +1,19 @@
+- name: "Create logs folder"
+  become: yes
+  file:
+    path: "{{ logfile | dirname }}"
+    owner: "{{ enduro_system_user }}"
+    group: "{{ enduro_system_group }}"
+    mode: 0755
+    state: "directory"
+
+- name: "Configure rsyslog"
+  template:
+    src: templates/rsyslog.conf.j2
+    dest: /etc/rsyslog.d/{{ order }}-{{ conf_files_name }}.conf
+  notify: restart rsyslog
+
+- name: "Configure log rotation"
+  template:
+    src: templates/logrotate.conf.j2
+    dest: /etc/logrotate.d/{{ conf_files_name }}

@@ -1,0 +1,7 @@
+---
+
+- name: Install preprocessing-worker package
+  yum:
+    name: "{{ preprocessing_worker_rpm_url }}"
+    state: present
+    disable_gpg_check: "{{ not enduro_rpm_gpg_check_enabled|bool }}"

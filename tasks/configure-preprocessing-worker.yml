@@ -1,0 +1,62 @@
+- name: "Create preprocessing shared folder"
+  become: yes
+  file:
+    path: "/var/lib/enduro/preprocessing"
+    owner: "{{ enduro_system_user }}"
+    group: "{{ enduro_system_group }}"
+    mode: 0755
+    state: "directory"
+
+- name: Create preprocessing systemd file
+  template:
+    src: templates/preprocessing-worker.service.j2
+    dest: /etc/systemd/system/preprocessing-worker.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart preprocessing-worker
+
+- name: Copy the allowed file formats CSV file
+  template:
+    src: "{{ item }}"
+    dest: /etc/allowed_file_formats.csv
+    owner: root
+    group: root
+    mode: 0644
+  with_first_found:
+    - templates/{{ inventory_hostname }}/allowed_file_formats.csv.j2
+    - templates/allowed_file_formats.csv.j2
+
+- name: Copy the preprocessing worker config file
+  template:
+    src: "{{ preprocessing_config_file }}"
+    dest: /etc/preprocessing-worker.toml
+    owner: root
+    group: root
+    mode: 0644
+  when: not enduro_systemd_credentials|bool
+  notify: restart preprocessing-worker
+
+- name: Use systemd credentials
+  block:
+    - include_tasks: systemd-creds.yml
+      vars:
+        service: "preprocessing-worker"
+        secret_name: "preprocessing-worker.toml"
+        secret_file: "{{ preprocessing_config_file }}"
+
+    - name: "Remove cleartext configuration file"
+      file:
+        path: "/etc/preprocessing-worker.toml"
+        state: absent
+  when: enduro_systemd_credentials|bool
+
+- name: Configure logging
+  block:
+    - include_tasks: configure-logging.yml
+      vars:
+        service: "preprocessing-worker"
+        conf_files_name: "preprocessing-worker"
+        logfile: "/var/log/enduro/preprocessing-worker.log"
+        order: "50"
+  when: enduro_use_syslog|bool

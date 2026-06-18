@@ -1,0 +1,14 @@
+- name: Create enduro secured credentials
+  shell: echo '{{ lookup('ansible.builtin.template', secret_file ) }}' | systemd-creds encrypt -p --name={{ secret_name }} - -
+  register: secured_credentials
+  notify: restart {{ service }}
+
+- name: "Create override dir"
+  file:
+    path: /etc/systemd/system/{{ service }}.service.d/
+    state: directory
+
+- name: "Template override file"
+  template:
+    src: templates/override.conf.j2
+    dest: /etc/systemd/system/{{ service }}.service.d/override.conf

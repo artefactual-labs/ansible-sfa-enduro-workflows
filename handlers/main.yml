@@ -1,0 +1,16 @@
+---
+- name: restart preprocessing-worker
+  become: true
+  systemd:
+    daemon_reload: true
+    name: preprocessing-worker
+    state: restarted
+
+- name: restart rsyslog
+  become: true
+  systemd:
+    daemon_reload: true
+    name: rsyslog
+    state: restarted
+  when: enduro_use_syslog|bool
+
