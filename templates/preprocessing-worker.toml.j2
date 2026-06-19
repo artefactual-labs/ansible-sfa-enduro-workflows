@@ -12,12 +12,6 @@ taskQueue = "{{ sfa_enduro_worker_task_queue }}"
 [preprocessing]
 workflowName = "{{ sfa_enduro_worker_preprocessing_workflow_name }}"
 sharedPath = "{{ sfa_enduro_worker_preprocessing_shared_path }}"
-checkDuplicates = "{{ sfa_enduro_worker_preprocessing_check_duplicates }}"
-
-[preprocessing.persistence]
-dsn = "{{ sfa_enduro_worker_preprocessing_db_user }}:{{ sfa_enduro_worker_preprocessing_db_pass }}@tcp({{ sfa_enduro_worker_preprocessing_db_host }}:{{ sfa_enduro_worker_preprocessing_db_port | int }})/{{ sfa_enduro_worker_preprocessing_db_name }}"
-driver = "mysql"
-migrate = true
 
 [preprocessing.bagCreate]
 checksumAlgorithm = "md5"

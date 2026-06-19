@@ -16,12 +16,6 @@ sfa_enduro_worker_task_queue: "sfa-enduro"
 
 # Preprocessing
 sfa_enduro_worker_preprocessing_workflow_name: "preprocessing"
-sfa_enduro_worker_preprocessing_db_user: "preprocessing"
-sfa_enduro_worker_preprocessing_db_pass: "enduro%123"
-sfa_enduro_worker_preprocessing_db_host: "localhost"
-sfa_enduro_worker_preprocessing_db_name: "preprocessing"
-sfa_enduro_worker_preprocessing_db_port: "3306"
-sfa_enduro_worker_preprocessing_check_duplicates: "true"
 sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }}/preprocessing"
 sfa_enduro_worker_preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
 
