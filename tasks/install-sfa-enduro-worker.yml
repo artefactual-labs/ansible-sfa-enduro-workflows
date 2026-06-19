@@ -1,5 +1,17 @@
 ---
 
+- name: Stop and disable legacy preprocessing worker service
+  systemd:
+    name: preprocessing-worker
+    enabled: false
+    state: stopped
+  failed_when: false
+
+- name: Remove legacy preprocessing worker package
+  yum:
+    name: preprocessing-worker
+    state: absent
+
 - name: Install SFA Enduro worker package
   yum:
     name: "{{ sfa_enduro_worker_rpm_url }}"

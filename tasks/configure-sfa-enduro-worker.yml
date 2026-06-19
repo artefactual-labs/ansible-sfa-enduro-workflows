@@ -7,10 +7,28 @@
     mode: 0755
     state: "directory"
 
+- name: Stop and disable legacy preprocessing worker service
+  systemd:
+    name: preprocessing-worker
+    enabled: false
+    state: stopped
+  failed_when: false
+
+- name: Remove legacy preprocessing worker systemd and config files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/systemd/system/preprocessing-worker.service
+    - /etc/systemd/system/preprocessing-worker.service.d
+    - /etc/preprocessing-worker.toml
+    - /etc/rsyslog.d/50-preprocessing-worker.conf
+    - /etc/logrotate.d/preprocessing-worker
+
 - name: Create SFA Enduro worker systemd file
   template:
-    src: templates/preprocessing-worker.service.j2
-    dest: /etc/systemd/system/preprocessing-worker.service
+    src: templates/sfa-enduro-worker.service.j2
+    dest: /etc/systemd/system/sfa-enduro-worker.service
     owner: root
     group: root
     mode: 0644
@@ -30,7 +48,7 @@
 - name: Copy the SFA Enduro worker config file
   template:
     src: "{{ sfa_enduro_worker_config_file }}"
-    dest: /etc/preprocessing-worker.toml
+    dest: /etc/sfa-enduro-worker.toml
     owner: root
     group: root
     mode: 0644
@@ -41,13 +59,13 @@
   block:
     - include_tasks: systemd-creds.yml
       vars:
-        service: "preprocessing-worker"
-        secret_name: "preprocessing-worker.toml"
+        service: "sfa-enduro-worker"
+        secret_name: "sfa-enduro-worker.toml"
         secret_file: "{{ sfa_enduro_worker_config_file }}"
 
     - name: "Remove cleartext configuration file"
       file:
-        path: "/etc/preprocessing-worker.toml"
+        path: "/etc/sfa-enduro-worker.toml"
         state: absent
   when: sfa_enduro_worker_systemd_credentials|bool
 
@@ -55,8 +73,8 @@
   block:
     - include_tasks: configure-logging.yml
       vars:
-        service: "preprocessing-worker"
-        conf_files_name: "preprocessing-worker"
+        service: "sfa-enduro-worker"
+        conf_files_name: "sfa-enduro-worker"
         logfile: "{{ sfa_enduro_worker_log_file }}"
         rsyslog_order: "50"
   when: sfa_enduro_worker_use_syslog|bool
