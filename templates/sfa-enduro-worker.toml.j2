@@ -23,8 +23,22 @@ allowlistPath = "/etc/allowed_file_formats.csv"
 path = "{{ sfa_enduro_worker_preprocessing_verapdf_path }}"
 
 [poststorage]
-workflowName = "{{ sfa_enduro_worker_poststorage_workflow_name }}"
 workingDir = "/tmp"
+
+[poststorage.apis]
+workflowName = "{{ sfa_enduro_worker_poststorage_apis_workflow_name }}"
+
+[poststorage.cantons]
+workflowName = "{{ sfa_enduro_worker_poststorage_cantons_workflow_name }}"
+
+[poststorage.cantons.bucket]
+url = "{{ sfa_enduro_worker_poststorage_cantons_bucket_url }}"
+endpoint = "{{ sfa_enduro_worker_poststorage_cantons_bucket_endpoint }}"
+pathStyle = {{ sfa_enduro_worker_poststorage_cantons_bucket_path_style | bool | lower }}
+accessKey = "{{ sfa_enduro_worker_poststorage_cantons_bucket_access_key }}"
+secretKey = "{{ sfa_enduro_worker_poststorage_cantons_bucket_secret_key }}"
+region = "{{ sfa_enduro_worker_poststorage_cantons_bucket_region }}"
+bucket = "{{ sfa_enduro_worker_poststorage_cantons_bucket_name }}"
 
 [poststorage.amss]
 baseURL = "{{ sfa_enduro_worker_poststorage_amss_base_url }}"
