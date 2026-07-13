@@ -36,7 +36,7 @@
     enabled: true
     state: "restarted"
   with_items:
-    - preprocessing-worker
+    - sfa-enduro-worker
   when: sfa_enduro_worker_configure|bool
   tags:
     - sfa_enduro_worker_configure

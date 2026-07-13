@@ -6,12 +6,12 @@ sfa_enduro_worker_systemd_credentials: false
 sfa_enduro_worker_use_syslog: false
 sfa_enduro_worker_remote_syslog: "none"
 sfa_enduro_worker_working_dir: "/var/lib/enduro"
-sfa_enduro_worker_log_file: "/var/log/enduro/preprocessing-worker.log"
+sfa_enduro_worker_log_file: "/var/log/enduro/sfa-enduro-worker.log"
 sfa_enduro_worker_install_rpm: False
-sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/preprocessing-worker-0.1.0-202405160901.el9.x86_64.rpm"
+sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/sfa-enduro-worker-0.1.0-202405160901.el9.x86_64.rpm"
 sfa_enduro_worker_configure: False
 sfa_enduro_worker_rpm_gpg_check_enabled: True
-sfa_enduro_worker_config_file: "templates/preprocessing-worker.toml.j2"
+sfa_enduro_worker_config_file: "templates/sfa-enduro-worker.toml.j2"
 sfa_enduro_worker_task_queue: "sfa-enduro"
 
 # Preprocessing
