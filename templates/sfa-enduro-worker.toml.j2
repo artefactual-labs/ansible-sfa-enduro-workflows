@@ -16,6 +16,10 @@ sharedPath = "{{ sfa_enduro_worker_preprocessing_shared_path }}"
 [preprocessing.bagCreate]
 checksumAlgorithm = "md5"
 
+[preprocessing.bagValidate]
+cacheDir = "{{ sfa_enduro_worker_preprocessing_bag_validate_cache_dir }}"
+poolSize = {{ sfa_enduro_worker_preprocessing_bag_validate_pool_size }}
+
 [preprocessing.fileFormat]
 allowlistPath = "/etc/allowed_file_formats.csv"
 
