@@ -5,3 +5,11 @@
     name: "{{ sfa_enduro_worker_rpm_url }}"
     state: present
     disable_gpg_check: "{{ not sfa_enduro_worker_rpm_gpg_check_enabled|bool }}"
+
+- name: Ensure the SFA Enduro worker home directory is writable
+  file:
+    path: "{{ sfa_enduro_worker_working_dir }}"
+    state: directory
+    owner: "{{ sfa_enduro_worker_system_user }}"
+    group: "{{ sfa_enduro_worker_system_group }}"
+    mode: "0755"
