@@ -1,7 +1,7 @@
 [Unit]
 Description=SFA Enduro worker
 AssertFileIsExecutable=/usr/bin/sfa-enduro-worker
-
+After=temporal.service
 
 [Service]
 Type=simple
