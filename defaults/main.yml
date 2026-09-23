@@ -1,27 +1,32 @@
 ---
+# Shared system account for the SFA Enduro worker and SFA DIPs.
 sfa_enduro_worker_system_user: "enduro"
 sfa_enduro_worker_system_group: "enduro"
 sfa_enduro_worker_create_system_user: true
+
+# SFA Enduro worker installation and service
+sfa_enduro_worker_install_rpm: False
+sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/sfa-enduro-worker-0.23.0-202609230530.el9.x86_64.rpm"
+sfa_enduro_worker_rpm_gpg_check_enabled: True
+sfa_enduro_worker_configure: False
 sfa_enduro_worker_systemd_credentials: false
 sfa_enduro_worker_use_syslog: false
 sfa_enduro_worker_remote_syslog: "none"
 sfa_enduro_worker_working_dir: "/var/lib/enduro"
 sfa_enduro_worker_log_file: "/var/log/enduro/sfa-enduro-worker.log"
-sfa_enduro_worker_install_rpm: False
-sfa_enduro_worker_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/sfa-enduro-worker-0.19.0-202607150125.el9.x86_64.rpm"
-sfa_enduro_worker_configure: False
-sfa_enduro_worker_rpm_gpg_check_enabled: True
 sfa_enduro_worker_config_file: "templates/sfa-enduro-worker.toml.j2"
+
+# SFA Enduro worker TOML config
 sfa_enduro_worker_task_queue: "sfa-enduro"
 
-# Preprocessing
+# SFA Enduro worker TOML config - Preprocessing
 sfa_enduro_worker_preprocessing_workflow_name: "preprocessing"
 sfa_enduro_worker_preprocessing_shared_path: "{{ sfa_enduro_worker_working_dir }}/preprocessing"
 sfa_enduro_worker_preprocessing_bag_validate_cache_dir: ""
 sfa_enduro_worker_preprocessing_bag_validate_pool_size: 1
 sfa_enduro_worker_preprocessing_verapdf_path: "/usr/local/verapdf/verapdf"
 
-# Poststorage
+# SFA Enduro worker TOML config - Poststorage
 sfa_enduro_worker_poststorage_apis_workflow_name: "poststorage-apis"
 sfa_enduro_worker_poststorage_cantons_workflow_name: "poststorage-cantons"
 sfa_enduro_worker_poststorage_cantons_bucket_url: ""
@@ -35,7 +40,7 @@ sfa_enduro_worker_poststorage_amss_base_url: ""
 sfa_enduro_worker_poststorage_amss_username: ""
 sfa_enduro_worker_poststorage_amss_key: ""
 
-# APIS configuration
+# SFA Enduro worker TOML config - APIS
 sfa_enduro_worker_apis_enabled: "false"
 sfa_enduro_worker_apis_url: ""
 sfa_enduro_worker_apis_timeout: "10s"
@@ -53,3 +58,63 @@ sfa_enduro_worker_apis_oidc_retry_max_attempts: 3
 sfa_enduro_worker_apis_oidc_retry_initial_interval: "500ms"
 sfa_enduro_worker_apis_oidc_retry_max_interval: "2s"
 sfa_enduro_worker_apis_oidc_retry_backoff_coefficient: 2.0
+
+# SFA DIPs installation and service
+sfa_dips_install_rpm: false
+sfa_dips_rpm_url: "https://jenkins-ci.archivematica.org/repos/am-packbuild/enduro-sfa/el9/sfa-dips-0.23.0-202609230530.el9.x86_64.rpm"
+sfa_dips_rpm_gpg_check_enabled: true
+sfa_dips_configure: false
+sfa_dips_systemd_credentials: false
+sfa_dips_use_syslog: false
+sfa_dips_remote_syslog: "none"
+sfa_dips_log_file: "/var/log/enduro/sfa-dips.log"
+sfa_dips_config_file: "templates/sfa-dips.toml.j2"
+
+# SFA DIPs TOML config
+sfa_dips_log_format: "json"
+sfa_dips_verbosity: 0
+sfa_dips_working_dir: "/var/lib/enduro/dips"
+sfa_dips_xsd_path: ""
+
+# SFA DIPs TOML config - API
+sfa_dips_api_listen: "127.0.0.1:9020"
+sfa_dips_api_cors_origin: ""
+sfa_dips_api_log_path: ""
+sfa_dips_api_log_level: "warn"
+sfa_dips_api_log_format: "json"
+sfa_dips_api_auth_enabled: false
+sfa_dips_api_auth_oidc: []
+#sfa_dips_api_auth_oidc:
+#  - provider_url: "http://keycloak:7470/realms/artefactual"
+#    client_id: "sfa-dips"
+#    skip_email_verified_check: true
+
+# SFA DIPs TOML config - Persistence
+sfa_dips_persistence_driver: "mysql"
+sfa_dips_persistence_dsn: ""
+sfa_dips_persistence_migrate: true
+
+# SFA DIPs TOML config - Temporal
+sfa_dips_temporal_address: "127.0.0.1:7233"
+sfa_dips_temporal_namespace: "default"
+sfa_dips_temporal_task_queue: "sfa-dips"
+sfa_dips_temporal_max_concurrent_sessions: 1
+
+# SFA DIPs TOML config - ACTApro
+sfa_dips_actapro_url: ""
+sfa_dips_actapro_timeout: "30s"
+sfa_dips_actapro_poll_interval: "1m"
+sfa_dips_actapro_token: ""
+sfa_dips_actapro_oidc_enabled: false
+sfa_dips_actapro_oidc_provider_url: ""
+sfa_dips_actapro_oidc_token_url: ""
+sfa_dips_actapro_oidc_client_id: ""
+sfa_dips_actapro_oidc_client_secret: ""
+sfa_dips_actapro_oidc_username: ""
+sfa_dips_actapro_oidc_password: ""
+sfa_dips_actapro_oidc_scopes: ""
+sfa_dips_actapro_oidc_token_expiry_leeway: "30s"
+sfa_dips_actapro_oidc_retry_max_attempts: 3
+sfa_dips_actapro_oidc_retry_initial_interval: "500ms"
+sfa_dips_actapro_oidc_retry_max_interval: "2s"
+sfa_dips_actapro_oidc_retry_backoff_coefficient: 2.0

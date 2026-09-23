@@ -6,10 +6,17 @@
     name: sfa-enduro-worker
     state: restarted
 
+- name: restart sfa-dips
+  become: true
+  systemd:
+    daemon_reload: true
+    name: sfa-dips
+    state: restarted
+
 - name: restart rsyslog
   become: true
   systemd:
     daemon_reload: true
     name: rsyslog
     state: restarted
-  when: sfa_enduro_worker_use_syslog|bool
+  when: sfa_enduro_worker_use_syslog|bool or sfa_dips_use_syslog|bool

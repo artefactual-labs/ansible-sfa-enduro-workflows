@@ -1,4 +1,6 @@
 ---
+# Both services
+
 - name: "Assert usage of systemd as an init system"
   assert:
     that: ansible_service_mgr == 'systemd'
@@ -6,15 +8,31 @@
   tags:
     - sfa_enduro_worker_install
     - sfa_enduro_worker_configure
+    - sfa_dips_install
+    - sfa_dips_configure
 
 - import_tasks: create-system-user.yml
   when:
     - sfa_enduro_worker_create_system_user|bool
-    - sfa_enduro_worker_install_rpm|bool or sfa_enduro_worker_configure|bool
+    - sfa_enduro_worker_install_rpm|bool or sfa_enduro_worker_configure|bool or sfa_dips_install_rpm|bool or sfa_dips_configure|bool
   become: true
   tags:
     - sfa_enduro_worker_install
     - sfa_enduro_worker_configure
+    - sfa_dips_install
+    - sfa_dips_configure
+
+- name: Install XML validation dependency
+  yum:
+    name: libxml2
+    state: present
+  when: sfa_enduro_worker_install_rpm|bool or sfa_dips_install_rpm|bool
+  become: true
+  tags:
+    - sfa_enduro_worker_install
+    - sfa_dips_install
+
+# SFA Enduro worker
 
 - import_tasks: install-sfa-enduro-worker.yml
   when: sfa_enduro_worker_install_rpm|bool
@@ -32,11 +50,34 @@
   become: true
   systemd:
     daemon_reload: true
-    name: "{{ item }}"
+    name: "sfa-enduro-worker"
     enabled: true
     state: "restarted"
-  with_items:
-    - sfa-enduro-worker
   when: sfa_enduro_worker_configure|bool
   tags:
     - sfa_enduro_worker_configure
+
+# SFA DIPs
+
+- import_tasks: install-sfa-dips.yml
+  when: sfa_dips_install_rpm|bool
+  become: true
+  tags:
+    - sfa_dips_install
+
+- import_tasks: configure-sfa-dips.yml
+  when: sfa_dips_configure|bool
+  become: true
+  tags:
+    - sfa_dips_configure
+
+- name: Ensure sfa-dips is enabled on boot
+  become: true
+  systemd:
+    daemon_reload: true
+    name: "sfa-dips"
+    enabled: true
+    state: "restarted"
+  when: sfa_dips_configure|bool
+  tags:
+    - sfa_dips_configure

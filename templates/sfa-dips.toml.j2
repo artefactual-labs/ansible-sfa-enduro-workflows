@@ -1,0 +1,55 @@
+logFormat = "{{ sfa_dips_log_format }}"
+verbosity = {{ sfa_dips_verbosity }}
+workingDir = "{{ sfa_dips_working_dir }}"
+xsdPath = "{{ sfa_dips_xsd_path }}"
+
+[api]
+listen = "{{ sfa_dips_api_listen }}"
+corsOrigin = "{{ sfa_dips_api_cors_origin }}"
+
+[api.log]
+path = "{{ sfa_dips_api_log_path }}"
+level = "{{ sfa_dips_api_log_level }}"
+format = "{{ sfa_dips_api_log_format }}"
+
+[api.auth]
+enabled = {{ sfa_dips_api_auth_enabled | bool | lower }}
+
+{% for oidc in sfa_dips_api_auth_oidc %}
+[[api.auth.oidc]]
+providerURL = "{{ oidc.provider_url }}"
+clientID = "{{ oidc.client_id }}"
+skipEmailVerifiedCheck = {{ oidc.skip_email_verified_check | default(false) | bool | lower }}
+{% endfor %}
+
+[persistence]
+driver = "{{ sfa_dips_persistence_driver }}"
+dsn = "{{ sfa_dips_persistence_dsn }}"
+migrate = {{ sfa_dips_persistence_migrate | bool | lower }}
+
+[temporal]
+address = "{{ sfa_dips_temporal_address }}"
+namespace = "{{ sfa_dips_temporal_namespace }}"
+taskQueue = "{{ sfa_dips_temporal_task_queue }}"
+maxConcurrentSessions = {{ sfa_dips_temporal_max_concurrent_sessions }}
+
+[actapro]
+url = "{{ sfa_dips_actapro_url }}"
+timeout = "{{ sfa_dips_actapro_timeout }}"
+pollInterval = "{{ sfa_dips_actapro_poll_interval }}"
+token = "{{ sfa_dips_actapro_token }}"
+
+[actapro.oidc]
+enabled = {{ sfa_dips_actapro_oidc_enabled | bool | lower }}
+providerURL = "{{ sfa_dips_actapro_oidc_provider_url }}"
+tokenURL = "{{ sfa_dips_actapro_oidc_token_url }}"
+clientID = "{{ sfa_dips_actapro_oidc_client_id }}"
+clientSecret = "{{ sfa_dips_actapro_oidc_client_secret }}"
+username = "{{ sfa_dips_actapro_oidc_username }}"
+password = "{{ sfa_dips_actapro_oidc_password }}"
+scopes = "{{ sfa_dips_actapro_oidc_scopes }}"
+tokenExpiryLeeway = "{{ sfa_dips_actapro_oidc_token_expiry_leeway }}"
+retryMaxAttempts = {{ sfa_dips_actapro_oidc_retry_max_attempts }}
+retryInitialInterval = "{{ sfa_dips_actapro_oidc_retry_initial_interval }}"
+retryMaxInterval = "{{ sfa_dips_actapro_oidc_retry_max_interval }}"
+retryBackoffCoefficient = {{ sfa_dips_actapro_oidc_retry_backoff_coefficient }}

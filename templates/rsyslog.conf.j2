@@ -6,8 +6,8 @@ if ($programname == "{{ service }}") then {
                 File="{{ logfile }}"
                 FileCreateMode="0644"
         )
-	{% if sfa_enduro_worker_remote_syslog != "none" %}
-	*.*      @@{{ sfa_enduro_worker_remote_syslog }}
+	{% if remote_syslog != "none" %}
+	*.*      @@{{ remote_syslog }}
         {% endif %}
         stop
 }
