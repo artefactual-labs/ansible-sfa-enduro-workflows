@@ -69,12 +69,13 @@ sfa_dips_use_syslog: false
 sfa_dips_remote_syslog: "none"
 sfa_dips_log_file: "/var/log/enduro/sfa-dips.log"
 sfa_dips_config_file: "templates/sfa-dips.toml.j2"
+sfa_dips_xsd_dir: "/etc/sfa-dips/xsd"
 
 # SFA DIPs TOML config
 sfa_dips_log_format: "json"
 sfa_dips_verbosity: 0
 sfa_dips_working_dir: "/var/lib/enduro/dips"
-sfa_dips_xsd_path: ""
+sfa_dips_xsd_path: "{{ sfa_dips_xsd_dir }}/arelda.xsd"
 
 # SFA DIPs TOML config - API
 sfa_dips_api_listen: "127.0.0.1:9020"

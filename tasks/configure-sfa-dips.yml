@@ -7,6 +7,18 @@
     mode: 0755
     state: "directory"
 
+- name: Copy SFA DIPs XML validation schemas
+  copy:
+    src: "{{ item }}/"
+    dest: "{{ sfa_dips_xsd_dir }}/"
+    owner: root
+    group: root
+    mode: 0644
+    directory_mode: 0755
+  with_first_found:
+    - files/{{ inventory_hostname }}/sfa-dips-xsd
+    - files/sfa-dips-xsd
+
 - name: Create SFA DIPs systemd file
   template:
     src: templates/sfa-dips.service.j2
