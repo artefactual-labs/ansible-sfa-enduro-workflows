@@ -1,0 +1,36 @@
+[Unit]
+Description=SFA DIPs application
+AssertFileIsExecutable=/usr/bin/sfa-dips
+After=temporal.service
+
+[Service]
+Type=simple
+WorkingDirectory={{ sfa_dips_working_dir }}
+User={{ sfa_enduro_worker_system_user }}
+Group={{ sfa_enduro_worker_system_group }}
+{% if sfa_dips_systemd_credentials|bool %}
+ExecStart=/usr/bin/sfa-dips --config $SECRETS
+{% else %}
+ExecStart=/usr/bin/sfa-dips --config /etc/sfa-dips.toml
+{% endif %}
+{% if sfa_dips_use_syslog|bool %}
+SyslogIdentifier=sfa-dips
+StandardOutput=syslog
+StandardError=inherit
+{% endif %}
+
+# Let systemd restart this service always
+#Restart=always
+
+# Specifies the maximum file descriptor number that can be opened by this process
+LimitNOFILE=1048576
+
+# Specifies the maximum number of threads this process can create
+#TasksMax=infinity
+
+# Disable timeout logic and wait until process is stopped
+#TimeoutStopSec=infinity
+#SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target

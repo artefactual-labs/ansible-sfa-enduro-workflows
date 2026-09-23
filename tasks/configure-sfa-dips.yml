@@ -1,0 +1,52 @@
+---
+- name: Create SFA DIPs working directory
+  file:
+    path: "{{ sfa_dips_working_dir }}"
+    owner: "{{ sfa_enduro_worker_system_user }}"
+    group: "{{ sfa_enduro_worker_system_group }}"
+    mode: 0755
+    state: "directory"
+
+- name: Create SFA DIPs systemd file
+  template:
+    src: templates/sfa-dips.service.j2
+    dest: /etc/systemd/system/sfa-dips.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart sfa-dips
+
+- name: Copy the SFA DIPs config file
+  template:
+    src: "{{ sfa_dips_config_file }}"
+    dest: /etc/sfa-dips.toml
+    owner: root
+    group: "{{ sfa_enduro_worker_system_group }}"
+    mode: 0640
+  when: not sfa_dips_systemd_credentials|bool
+  notify: restart sfa-dips
+
+- name: Use systemd credentials for SFA DIPs
+  block:
+    - include_tasks: systemd-creds.yml
+      vars:
+        service: "sfa-dips"
+        secret_name: "sfa-dips.toml"
+        secret_file: "{{ sfa_dips_config_file }}"
+
+    - name: Remove cleartext SFA DIPs configuration file
+      file:
+        path: /etc/sfa-dips.toml
+        state: absent
+  when: sfa_dips_systemd_credentials|bool
+
+- name: Configure SFA DIPs logging
+  block:
+    - include_tasks: configure-logging.yml
+      vars:
+        service: "sfa-dips"
+        conf_files_name: "sfa-dips"
+        logfile: "{{ sfa_dips_log_file }}"
+        remote_syslog: "{{ sfa_dips_remote_syslog }}"
+        rsyslog_order: "50"
+  when: sfa_dips_use_syslog|bool
