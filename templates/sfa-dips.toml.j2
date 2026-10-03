@@ -53,3 +53,19 @@ retryMaxAttempts = {{ sfa_dips_actapro_oidc_retry_max_attempts }}
 retryInitialInterval = "{{ sfa_dips_actapro_oidc_retry_initial_interval }}"
 retryMaxInterval = "{{ sfa_dips_actapro_oidc_retry_max_interval }}"
 retryBackoffCoefficient = {{ sfa_dips_actapro_oidc_retry_backoff_coefficient }}
+
+[amss]
+baseURL = "{{ sfa_dips_amss_base_url }}"
+username = "{{ sfa_dips_amss_username }}"
+key = "{{ sfa_dips_amss_key }}"
+
+[bucket]
+url = "{{ sfa_dips_bucket_url }}"
+endpoint = "{{ sfa_dips_bucket_endpoint }}"
+bucket = "{{ sfa_dips_bucket_bucket }}"
+accessKey = "{{ sfa_dips_bucket_access_key }}"
+secretKey = "{{ sfa_dips_bucket_secret_key }}"
+token = "{{ sfa_dips_bucket_token }}"
+profile = "{{ sfa_dips_bucket_profile }}"
+region = "{{ sfa_dips_bucket_region }}"
+pathStyle = {{ sfa_dips_bucket_path_style | bool | lower }}

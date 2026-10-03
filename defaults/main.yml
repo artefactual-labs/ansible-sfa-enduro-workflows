@@ -119,3 +119,19 @@ sfa_dips_actapro_oidc_retry_max_attempts: 3
 sfa_dips_actapro_oidc_retry_initial_interval: "500ms"
 sfa_dips_actapro_oidc_retry_max_interval: "2s"
 sfa_dips_actapro_oidc_retry_backoff_coefficient: 2.0
+
+# SFA DIPs TOML config - Archivematica Storage Service
+sfa_dips_amss_base_url: ""
+sfa_dips_amss_username: ""
+sfa_dips_amss_key: ""
+
+# SFA DIPs TOML config - Bucket
+sfa_dips_bucket_url: ""
+sfa_dips_bucket_endpoint: ""
+sfa_dips_bucket_bucket: ""
+sfa_dips_bucket_access_key: ""
+sfa_dips_bucket_secret_key: ""
+sfa_dips_bucket_token: ""
+sfa_dips_bucket_profile: ""
+sfa_dips_bucket_region: ""
+sfa_dips_bucket_path_style: false
