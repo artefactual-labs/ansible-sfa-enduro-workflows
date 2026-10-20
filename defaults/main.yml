@@ -75,6 +75,7 @@ sfa_dips_log_format: "json"
 sfa_dips_verbosity: 0
 sfa_dips_working_dir: "/var/lib/enduro/dips"
 sfa_dips_xsd_dir: "/etc/sfa-dips/xsd"
+sfa_dips_retention_period: "0"
 
 # SFA DIPs TOML config - API
 sfa_dips_api_listen: "127.0.0.1:9020"
